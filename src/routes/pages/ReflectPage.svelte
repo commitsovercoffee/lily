@@ -1,5 +1,5 @@
 <script>
-	import Button from "./Button.svelte";
+	import Button from "../components/Button.svelte";
 
 	export let title = "A Sassy Title";
 	export let content =
