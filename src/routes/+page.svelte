@@ -3,6 +3,7 @@
 	import ReflectPage from "./pages/ReflectPage.svelte";
 	import TaskPage from "./pages/TaskPage.svelte";
 	import PriorityPage from "./pages/PriorityPage.svelte";
+	import RoutinePage from "./pages/RoutinePage.svelte";
 	import { page } from "./store.js";
 </script>
 
@@ -14,4 +15,6 @@
 	<TaskPage />
 {:else if $page === 4}
 	<PriorityPage />
+{:else if $page === 5}
+	<RoutinePage />
 {/if}
