@@ -1,85 +1,95 @@
 <script>
-	export let left = 100;
-	export let top = 100;
+	let left = 100;
+	let top = 100;
 
 	const cardStyle =
 		"cursor-move select-none p-8 bg-red-300 h-8 w-16 ease-linear absolute";
+	const canMove = " absolute";
 
-	let isCardInsideContainer = false;
-	// vars binded to elements
-	let container;
+	let mon;
+	let tue;
+	let wed;
+	let thurs;
+	let fri;
+	let sat;
+	let sun;
 	let card;
-
-	let containerRect;
-	let cardRect;
 
 	let offsetX = 0;
 	let offsetY = 0;
-	let isDragging = false;
 
-	function onMouseDown(e) {
-		isDragging = true;
-		offsetX = e.clientX - left;
-		offsetY = e.clientY - top;
+	let isDragging = false;
+	let isInside = false;
+
+	function isAlmostInside(parent, child) {
+		const parentRect = parent.getBoundingClientRect();
+		const childRect = child.getBoundingClientRect();
+
+		let isInside =
+			// top
+			childRect.top >= parentRect.top - childRect.height &&
+			childRect.top <= parentRect.bottom + childRect.height &&
+			// left
+			childRect.left >= parentRect.left - childRect.width &&
+			childRect.left <= parentRect.right + childRect.width &&
+			// right
+			childRect.right <= parentRect.right + childRect.width &&
+			childRect.right >= parentRect.left - childRect.width;
+
+		return isInside;
 	}
 
-	function checkOverlap(e) {}
+	function snapVertically(parent, child) {
+		const parentRect = parent.getBoundingClientRect();
+		const childRect = child.getBoundingClientRect();
 
-	function onMouseMove(e) {
-		containerRect = container.getBoundingClientRect();
-		cardRect = card.getBoundingClientRect();
+		// write code to snap card vertical center of container
+		const parentCenterY = parentRect.top + parentRect.height / 2;
+		const childCenterY = childRect.top + childRect.height / 2;
 
-		if (isDragging) {
-			left = e.clientX - offsetX;
-			top = e.clientY - offsetY;
-
-			console.log(checkOverlap(e));
-		}
+		top += parentCenterY - childCenterY;
 	}
 
 	function onMouseUp() {
 		isDragging = false;
+		isInside = false;
 
-		// Check if cardRect is inside containerRect
-		isCardInsideContainer =
-			// top
-			cardRect.top >= containerRect.top - cardRect.height &&
-			cardRect.top <=
-				containerRect.bottom + cardRect.height &&
-			// left
-			cardRect.left >= containerRect.left - cardRect.width &&
-			cardRect.left <= containerRect.right + cardRect.width &&
-			// right
-
-			cardRect.right <=
-				containerRect.right + cardRect.width &&
-			cardRect.right >= containerRect.left - cardRect.width;
-
-		console.log("Is card inside container?", isCardInsideContainer);
-
-		// write code to snap card vertical center of container
-		if (isCardInsideContainer) {
-			const containerCenterY =
-				containerRect.top + containerRect.height / 2;
-			const cardCenterY = cardRect.top + cardRect.height / 2;
-
-			const offsetYCenter = containerCenterY - cardCenterY;
-
-			top += offsetYCenter;
+		if (isAlmostInside(mon, card)) {
+			snapVertically(mon, card);
+		} else if (isAlmostInside(tue, card)) {
+			snapVertically(tue, card);
 		}
 	}
 </script>
 
-<section bind:this={container} class="relative m-16 p-16 bg-sky-100 w-96 h-8" />
-
 <!-- This is card -->
 <section
 	bind:this={card}
-	on:mousedown={onMouseDown}
+	on:mousedown={(e) => {
+		isDragging = true;
+		offsetX = e.clientX - left;
+		offsetY = e.clientY - top;
+	}}
 	style="left: {left}px; top: {top}px;"
-	class={isCardInsideContainer ? cardStyle : cardStyle}
+	class="absolute z-10 bg-red-100 cursor-move select-none"
 >
-	<slot />
+	Sample
 </section>
 
-<svelte:window on:mouseup={onMouseUp} on:mousemove={onMouseMove} />
+<svelte:window
+	on:mouseup={onMouseUp}
+	on:mousemove={(e) => {
+		if (isDragging) {
+			left = e.clientX - offsetX;
+			top = e.clientY - offsetY;
+		}
+	}}
+/>
+
+<section bind:this={mon} class="relative m-16 p-16 bg-teal-100 w-full h-8" />
+<section bind:this={tue} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<section bind:this={wed} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<section bind:this={thurs} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<section bind:this={fri} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<section bind:this={sat} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<section bind:this={sun} class="relative m-16 p-16 bg-sky-100 w-full h-8" />

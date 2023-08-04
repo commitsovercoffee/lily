@@ -9,8 +9,8 @@
 </script>
 
 <section class="h-screen flex justify-center">
-	<div class="p-2 m-4">
-		<section class="w-96">
+	<div class="p-2 m-4 w-96">
+		<section class="w-full">
 			<h2 class="p-4 text-4xl font-bold">
 				{title}
 			</h2>
