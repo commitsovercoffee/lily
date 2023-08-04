@@ -8,16 +8,17 @@
 	export let src = "./lily.png";
 </script>
 
-<section class="h-screen flex justify-center">
-	<div class="p-2 m-4 w-96">
-		<section class="w-full">
+<section class="flex justify-center">
+	<div class="p-2 m-4">
+		<section class="w-screen p-6">
 			<h2 class="p-4 text-4xl font-bold">
 				{title}
 			</h2>
 			<p class="p-4">
 				{content}
 			</p>
-			<Draggable>sad</Draggable>
+			<section class="p-2 my-8 h-32 border-2 rounded-xl" />
+			<Draggable>drink ample water</Draggable>
 		</section>
 
 		<Button label="START" />

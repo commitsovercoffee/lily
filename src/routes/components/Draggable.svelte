@@ -1,10 +1,14 @@
 <script>
-	let left = 100;
-	let top = 100;
+	let left = 420;
+	let top = 220;
 
 	const cardStyle =
 		"cursor-move select-none p-8 bg-red-300 h-8 w-16 ease-linear absolute";
 	const canMove = " absolute";
+	const dayRowStyle =
+		"py-8 px-2 bg-teal-100 w-full border-b-2 border-black ";
+	const dayLabelStyle =
+		"py-8 px-2 w-32  border-b-2 border-r-2 border-black  ";
 
 	let mon;
 	let tue;
@@ -27,8 +31,8 @@
 
 		let isInside =
 			// top
-			childRect.top >= parentRect.top - childRect.height &&
-			childRect.top <= parentRect.bottom + childRect.height &&
+			childRect.top >= parentRect.top &&
+			childRect.top <= parentRect.bottom &&
 			// left
 			childRect.left >= parentRect.left - childRect.width &&
 			childRect.left <= parentRect.right + childRect.width &&
@@ -58,6 +62,16 @@
 			snapVertically(mon, card);
 		} else if (isAlmostInside(tue, card)) {
 			snapVertically(tue, card);
+		} else if (isAlmostInside(wed, card)) {
+			snapVertically(wed, card);
+		} else if (isAlmostInside(thurs, card)) {
+			snapVertically(thurs, card);
+		} else if (isAlmostInside(fri, card)) {
+			snapVertically(fri, card);
+		} else if (isAlmostInside(sat, card)) {
+			snapVertically(sat, card);
+		} else if (isAlmostInside(sun, card)) {
+			snapVertically(sun, card);
 		}
 	}
 </script>
@@ -71,9 +85,9 @@
 		offsetY = e.clientY - top;
 	}}
 	style="left: {left}px; top: {top}px;"
-	class="absolute z-10 bg-red-100 cursor-move select-none"
+	class="p-2 absolute z-10 bg-red-100 cursor-move select-none rounded-xl"
 >
-	Sample
+	Drink a glass of water.
 </section>
 
 <svelte:window
@@ -86,10 +100,33 @@
 	}}
 />
 
-<section bind:this={mon} class="relative m-16 p-16 bg-teal-100 w-full h-8" />
-<section bind:this={tue} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
-<section bind:this={wed} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
-<section bind:this={thurs} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
-<section bind:this={fri} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
-<section bind:this={sat} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
-<section bind:this={sun} class="relative m-16 p-16 bg-sky-100 w-full h-8" />
+<div class="flex">
+	<p class={dayLabelStyle}>Monday</p>
+	<section bind:this={mon} class={dayRowStyle} />
+</div>
+
+<div class="flex">
+	<p class={dayLabelStyle}>Tuesday</p>
+	<section bind:this={tue} class={dayRowStyle} />
+</div>
+
+<div class="flex">
+	<p class={dayLabelStyle}>Wednesday</p>
+	<section bind:this={wed} class={dayRowStyle} />
+</div>
+<div class="flex">
+	<p class={dayLabelStyle}>Thursday</p>
+	<section bind:this={thurs} class={dayRowStyle} />
+</div>
+<div class="flex">
+	<p class={dayLabelStyle}>Friday</p>
+	<section bind:this={fri} class={dayRowStyle} />
+</div>
+<div class="flex">
+	<p class={dayLabelStyle}>Saturday</p>
+	<section bind:this={sat} class={dayRowStyle} />
+</div>
+<div class="flex">
+	<p class={dayLabelStyle}>Sunday</p>
+	<section bind:this={sun} class={dayRowStyle} />
+</div>
